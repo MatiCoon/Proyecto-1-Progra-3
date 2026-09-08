@@ -25,5 +25,16 @@ public class Reserva {
         this.estado = "ACTIVA";
     }
 
+    public String getEstado() {return estado;}
+    public LocalDate getFecha() {return fecha;}
+    public List<Recurso> getRecursosAsignados() {return recursosAsignados;}
 
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public LocalTime getHoraFin() {
+        return horaFin;
+    }
 }
+
