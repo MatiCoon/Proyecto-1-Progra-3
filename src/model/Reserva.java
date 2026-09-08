@@ -25,9 +25,21 @@ public class Reserva {
         this.estado = "ACTIVA";
     }
 
-    public String getEstado() {return estado;}
-    public LocalDate getFecha() {return fecha;}
-    public List<Recurso> getRecursosAsignados() {return recursosAsignados;}
+    public String getId() {
+        return id;
+    }
+
+    public String getFuncionarioId() {
+        return funcionarioId;
+    }
+
+    public String getActividad() {
+        return actividad;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
 
     public LocalTime getHoraInicio() {
         return horaInicio;
@@ -35,6 +47,14 @@ public class Reserva {
 
     public LocalTime getHoraFin() {
         return horaFin;
+    }
+
+    public List<Recurso> getRecursosAsignados() {
+        return recursosAsignados;
+    }
+
+    public String getEstado() {
+        return estado;
     }
 }
 
