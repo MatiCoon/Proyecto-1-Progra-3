@@ -1,5 +1,6 @@
 package controller;
 
+import data.XMLManager;
 import model.Categoria;
 import model.Recurso;
 import model.Reserva;
@@ -14,10 +15,12 @@ import java.util.UUID;
 public class ReservaController {
     private List<Reserva> Reservas;
     private List<Recurso> Recursos;
+    private String pathFile;
 
-    public ReservaController(List<Reserva> Reservas, List<Recurso> Recursos) {
+    public ReservaController(List<Reserva> Reservas, List<Recurso> Recursos, String pathFile) {
         this.Reservas = Reservas;
         this.Recursos = Recursos;
+        this.pathFile = pathFile;
     }
 
     public ReservaResultado intentarReserva(String funcionarioId, String actividad,
@@ -42,6 +45,12 @@ public class ReservaController {
         String nuevoId = "RES-" + UUID.randomUUID().toString().substring(0,6).toUpperCase();
         Reserva nuevaReserva = new Reserva(nuevoId, funcionarioId, actividad, fecha, inicio, fin, recursosAsignados);
         Reservas.add(nuevaReserva);
+
+        try {
+            XMLManager.guardarReservas(Reservas, pathFile);
+        } catch (Exception e) {
+            System.err.println("Error al guardar en XML: " + e.getMessage());
+        }
 
         return new ReservaResultado(true, nuevaReserva, null);
     }
