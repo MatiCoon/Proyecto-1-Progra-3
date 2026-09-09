@@ -9,18 +9,17 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 public class ReservaController {
     private List<Reserva> Reservas;
     private List<Recurso> Recursos;
-    private String pathFile;
+    private String rutaXML;
 
-    public ReservaController(List<Reserva> Reservas, List<Recurso> Recursos, String pathFile) {
+    public ReservaController(List<Reserva> Reservas, List<Recurso> Recursos, String rutaXML) {
         this.Reservas = Reservas;
         this.Recursos = Recursos;
-        this.pathFile = pathFile;
+        this.rutaXML = rutaXML;
     }
 
     public ReservaResultado intentarReserva(String funcionarioId, String actividad,
@@ -47,12 +46,23 @@ public class ReservaController {
         Reservas.add(nuevaReserva);
 
         try {
-            XMLManager.guardarReservas(Reservas, pathFile);
+            XMLManager.guardarReservas(Reservas, rutaXML);
         } catch (Exception e) {
             System.err.println("Error al guardar en XML: " + e.getMessage());
         }
 
         return new ReservaResultado(true, nuevaReserva, null);
+    }
+
+    public boolean cancelarReserva(String id) {
+        for (Reserva reserva : Reservas) {
+            if (reserva.getId().equals(id) && reserva.getEstado().equals("ACTIVA")) {
+                reserva.setEstado("CANCELADA");
+                guardarCambios();
+                return true;
+            }
+        }
+        return false;
     }
 
     private Recurso primerRecursoDisponible(Categoria categoria, LocalDate fecha, LocalTime inicio, LocalTime fin) {
@@ -83,5 +93,12 @@ public class ReservaController {
             }
         }
         return true;
+    }
+    private void guardarCambios() {
+        try {
+            XMLManager.guardarReservas(Reservas, rutaXML);
+        } catch (Exception e) {
+            System.err.println("Error al guardar en XML: " + e.getMessage());
+        }
     }
 }
