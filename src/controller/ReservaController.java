@@ -56,7 +56,7 @@ public class ReservaController {
 
     public boolean cancelarReserva(String id) {
         for (Reserva reserva : Reservas) {
-            if (reserva.getId().equals(id) && reserva.getEstado().equals("ACTIVADA")) {
+            if (reserva.getId().equals(id) && reserva.getEstado().equals("ACTIVA")) {
                 reserva.setEstado("CANCELADA");
                 guardarCambios();
                 return true;

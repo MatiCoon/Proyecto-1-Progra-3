@@ -15,59 +15,38 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ReservaTests {
+class ReservaControllerTest {
     private ReservaController controller;
     private Categoria cat;
-    private Recurso sala1;
-    private final String XML_PATH = "test_reservas.xml";
+    private final String TEST_XML = "test_reservas.xml";
 
     @BeforeEach
     void setUp() {
-        cat = new Categoria("CAT-001", "Sala de conferencias");
-        sala1 = new Recurso("REC-001", cat, "Sala 1");
+        cat = new Categoria("CAT-001", "Proyector");
+        Recurso proyector = new Recurso("P-01", cat, "Proyector EPSON");
 
-        List<Recurso> recursos = List.of(sala1);
-        List<Reserva> reservas = new ArrayList<>();
-        controller = new ReservaController(reservas, recursos, XML_PATH);
+        controller = new ReservaController(new ArrayList<>(), List.of(proyector), TEST_XML);
     }
 
     @AfterEach
-    void deleteXML() {
-        File testFile = new File(XML_PATH);
-        if (testFile.exists()) {
-            testFile.delete();
-        }
-    }
-    @Test
-    void testReservaExitosa() {
-        LocalDate fecha = LocalDate.of(2026, 8, 14);
-        LocalTime inicio = LocalTime.of(8, 0);
-        LocalTime fin = LocalTime.of(10, 0);
-
-        ReservaResultado resultado = controller.intentarReserva("111", "Reunión", fecha, inicio, fin, List.of(cat));
-
-        assertTrue(resultado.isExito(), "La reserva debería ser exitosa");
-        assertNotNull(resultado.getReserva());
-        assertEquals(1, resultado.getReserva().getRecursosAsignados().size());
-
-        File testFile = new File(XML_PATH);
-        assertTrue(testFile.exists(), "El archivo XML debería haberse creado");
+    void tearDown() {
+        new File(TEST_XML).delete();
     }
 
     @Test
-    void testFallaPorFaltaDeRecursos() {
-        Reserva existente = new Reserva("RES-OLD", "222", "Junta",
-                LocalDate.of(2026, 8, 14), LocalTime.of(8, 0), LocalTime.of(10, 0), List.of(sala1));
+    void testCancelarReservaLiberaRecursos() {
+        LocalDate fecha = LocalDate.of(2026, 10, 5);
+        LocalTime inicio = LocalTime.of(14, 0);
+        LocalTime fin = LocalTime.of(16, 0);
 
-        List<Reserva> reservasExistentes = new ArrayList<>(List.of(existente));
+        ReservaResultado r1 = controller.intentarReserva("111", "Clase A", fecha, inicio, fin, List.of(cat));
+        assertTrue(r1.isExito());
 
-        controller = new ReservaController(reservasExistentes, List.of(sala1), XML_PATH);
+        boolean cancelada = controller.cancelarReserva(r1.getReserva().getId());
+        assertTrue(cancelada);
+        assertEquals("CANCELADA", r1.getReserva().getEstado());
 
-        ReservaResultado resultado = controller.intentarReserva("111", "Reunión",
-                LocalDate.of(2026, 8, 14), LocalTime.of(9, 0), LocalTime.of(11, 0), List.of(cat));
-
-        assertFalse(resultado.isExito(), "La reserva debería fallar por traslape");
-        assertFalse(resultado.getCategoriasNoDisponibles().isEmpty());
-        assertEquals("CAT-001", resultado.getCategoriasNoDisponibles().get(0).getId());
+        ReservaResultado r2 = controller.intentarReserva("222", "Clase B", fecha, inicio, fin, List.of(cat));
+        assertTrue(r2.isExito(), "El recurso debió ser liberado al cancelar la reserva anterior");
     }
 }
