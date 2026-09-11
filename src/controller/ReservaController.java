@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ReservaController {
     private List<Reserva> Reservas;
@@ -63,6 +64,16 @@ public class ReservaController {
             }
         }
         return false;
+    }
+
+    public List<Reserva> getReservasPorFuncionario(String funcionarioId) {
+        return Reservas.stream()
+                .filter(r -> r.getFuncionarioId().equals(funcionarioId))
+                .collect(Collectors.toList());
+    }
+
+    public List<Reserva> getTodasLasReservas() {
+        return Reservas;
     }
 
     private Recurso primerRecursoDisponible(Categoria categoria, LocalDate fecha, LocalTime inicio, LocalTime fin) {
