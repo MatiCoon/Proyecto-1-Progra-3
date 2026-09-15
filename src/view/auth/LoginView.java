@@ -2,12 +2,14 @@ package view.auth;
 
 import controller.*;
 import model.Usuario;
+import view.AdminFrame;
+import view.FuncionarioFrame;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class LoginView extends JFrame {
     private final AuthController authController;
-
     private final FuncionarioController funcionarioController;
     private final CategoriaController categoriaController;
     private final RecursoController recursoController;
@@ -59,22 +61,27 @@ public class LoginView extends JFrame {
     }
 
     private void procesarLogin() {
-        String id = txtId.getText();
-        String clave = new String(txtClave.getPassword());
+        String id = txtId.getText().trim();
+        String clave = new String(txtClave.getPassword()).trim();
+
+        if (id.isEmpty() || clave.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar ID y clave.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         Usuario autenticado = authController.autenticar(id, clave);
 
         if (autenticado != null) {
-            this.dispose(); // Close login window
-            if (autenticado.getRol().equals("ADMIN")) {
-                // TODO: new view.admin.AdminFrame(funcionarioController, categoriaController, recursoController).setVisible(true);
-                System.out.println("Login ADMIN exitoso. (AdminFrame pendiente)");
+            this.dispose();
+            if ("ADMIN".equalsIgnoreCase(autenticado.getRol())) {
+                AdminFrame adminFrame = new AdminFrame(funcionarioController, categoriaController, recursoController);
+                adminFrame.setVisible(true);
             } else {
-                // TODO: new view.funcionario.FuncionarioFrame(reservaController, autenticado.getId(), categoriaController).setVisible(true);
-                System.out.println("Login FUNCIONARIO exitoso. (FuncionarioFrame pendiente)");
+                FuncionarioFrame funcFrame = new FuncionarioFrame(reservaController, categoriaController, autenticado.getId());
+                funcFrame.setVisible(true);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Credenciales incorrectas.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -13,11 +13,22 @@ public class AdminFrame extends JFrame {
         setLocationRelativeTo(null);
 
         JTabbedPane tabs = new JTabbedPane();
-        tabs.addTab("Funcionarios", new FuncionariosPanel(fc));
-        tabs.addTab("Categorías", new CategoriasPanel(cc));
-        tabs.addTab("Recursos", new RecursosPanel(rc, cc));
-        tabs.addTab("Calendarización", new JPanel());
-        tabs.addTab("Estadísticas", new JPanel());
+
+        FuncionariosPanel pnlFuncionarios = new FuncionariosPanel(fc);
+        CategoriasPanel pnlCategorias = new CategoriasPanel(cc);
+        RecursosPanel pnlRecursos = new RecursosPanel(rc, cc);
+
+        tabs.addTab("Funcionarios", pnlFuncionarios);
+        tabs.addTab("Categorías", pnlCategorias);
+        tabs.addTab("Recursos", pnlRecursos);
+        tabs.addTab("Calendarización", new JPanel()); // Fase 4
+        tabs.addTab("Estadísticas", new JPanel()); // Fase 4
+
+        tabs.addChangeListener(e -> {
+            if (tabs.getSelectedComponent() == pnlRecursos) {
+                pnlRecursos.cargarCategoriasEnCombos();
+            }
+        });
 
         add(tabs);
     }

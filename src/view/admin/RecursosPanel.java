@@ -110,7 +110,7 @@ public class RecursosPanel extends JPanel {
         });
     }
 
-    private void cargarCategoriasEnCombos() {
+    public void cargarCategoriasEnCombos() {
         DefaultComboBoxModel<Categoria> fModel = new DefaultComboBoxModel<>();
         DefaultComboBoxModel<Categoria> frmModel = new DefaultComboBoxModel<>();
         for (Categoria c : categoriaController.obtenerTodas()) {
