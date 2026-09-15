@@ -6,7 +6,7 @@ import view.admin.*;
 import javax.swing.*;
 
 public class AdminFrame extends JFrame {
-    public AdminFrame(FuncionarioController fc, CategoriaController cc, RecursoController rc) {
+    public AdminFrame(FuncionarioController fc, CategoriaController cc, RecursoController rc, ReservaController resController) {
         setTitle("SISTEMA DE RESERVAS - MÓDULO ADMINISTRADOR");
         setSize(1000, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -21,8 +21,8 @@ public class AdminFrame extends JFrame {
         tabs.addTab("Funcionarios", pnlFuncionarios);
         tabs.addTab("Categorías", pnlCategorias);
         tabs.addTab("Recursos", pnlRecursos);
-        tabs.addTab("Calendarización", new JPanel()); // Fase 4
-        tabs.addTab("Estadísticas", new JPanel()); // Fase 4
+        tabs.addTab("Calendarización", new JPanel());
+        tabs.addTab("Estadísticas", new view.estadisticas.EstadisticasPanel(resController));
 
         tabs.addChangeListener(e -> {
             if (tabs.getSelectedComponent() == pnlRecursos) {

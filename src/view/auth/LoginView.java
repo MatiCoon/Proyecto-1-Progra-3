@@ -74,7 +74,7 @@ public class LoginView extends JFrame {
         if (autenticado != null) {
             this.dispose();
             if ("ADMIN".equalsIgnoreCase(autenticado.getRol())) {
-                AdminFrame adminFrame = new AdminFrame(funcionarioController, categoriaController, recursoController);
+                AdminFrame adminFrame = new AdminFrame(funcionarioController, categoriaController, recursoController, reservaController);
                 adminFrame.setVisible(true);
             } else {
                 FuncionarioFrame funcFrame = new FuncionarioFrame(reservaController, categoriaController, autenticado.getId());

@@ -16,7 +16,7 @@ public class FuncionarioFrame extends JFrame {
         tabs.addTab("Reservas", new ReservaPanel(rc, cc, funcionarioId));
         tabs.addTab("Calendarización", new JPanel());
         tabs.addTab("Actividades", new JPanel());
-        tabs.addTab("Estadísticas", new JPanel());
+        tabs.addTab("Estadísticas", new view.estadisticas.EstadisticasPanel(rc));
         add(tabs);
     }
 }
