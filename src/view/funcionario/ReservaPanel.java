@@ -44,7 +44,58 @@ public class ReservaPanel extends JPanel {
         pnlNlp.setBorder(BorderFactory.createTitledBorder("Asistente IA (Fase 4)"));
         txtNlp = new JTextField();
         JButton btnExtraer = new JButton("Extraer");
-        btnExtraer.addActionListener(e -> JOptionPane.showMessageDialog(this, "Integración LLM pendiente para Fase 4"));
+        btnExtraer.addActionListener(e -> {
+            String frase = txtNlp.getText().trim();
+            if (frase.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese una frase para extraer los datos.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            btnExtraer.setEnabled(false);
+            btnExtraer.setText("Extrayendo...");
+
+            SwingWorker<service.ReservaExtraidaDTO, Void> worker = new SwingWorker<>() {
+                @Override
+                protected service.ReservaExtraidaDTO doInBackground() throws Exception {
+                    return service.AIService.extraerDatosReserva(frase, categoriaController.obtenerTodas());
+                }
+
+                @Override
+                protected void done() {
+                    btnExtraer.setEnabled(true);
+                    btnExtraer.setText("Extraer");
+                    try {
+                        service.ReservaExtraidaDTO resultado = get();
+                        if (resultado != null) {
+                            if (resultado.getActividad() != null) txtActividad.setText(resultado.getActividad());
+                            if (resultado.getFecha() != null) txtFecha.setText(resultado.getFecha());
+                            if (resultado.getHoraInicio() != null) txtHoraInicio.setText(resultado.getHoraInicio());
+                            if (resultado.getHoraFin() != null) txtHoraFin.setText(resultado.getHoraFin());
+
+                            if (resultado.getCategorias() != null) {
+                                ListModel<Categoria> model = listCategorias.getModel();
+                                java.util.List<Integer> indices = new java.util.ArrayList<>();
+                                for (int i = 0; i < model.getSize(); i++) {
+                                    String desc = model.getElementAt(i).getDescripcion().toLowerCase();
+                                    for (String catSugerida : resultado.getCategorias()) {
+                                        if (desc.contains(catSugerida.toLowerCase())) {
+                                            indices.add(i);
+                                        }
+                                    }
+                                }
+                                int[] arrIndices = indices.stream().mapToInt(Integer::intValue).toArray();
+                                listCategorias.setSelectedIndices(arrIndices);
+                            }
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(ReservaPanel.this,
+                                "Error al contactar al asistente IA: " + ex.getCause().getMessage(),
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            };
+            worker.execute();
+        });
         pnlNlp.add(new JLabel("Frase: "), BorderLayout.WEST);
         pnlNlp.add(txtNlp, BorderLayout.CENTER);
         pnlNlp.add(btnExtraer, BorderLayout.EAST);
