@@ -35,7 +35,7 @@ public class CategoriasPanel extends JPanel {
         JButton btnBuscar = new JButton("Buscar");
         JButton btnImprimir = new JButton("Imprimir");
         btnBuscar.addActionListener(e -> buscar());
-        btnImprimir.addActionListener(e -> JOptionPane.showMessageDialog(this, "Generación PDF en Fase 4"));
+        btnImprimir.addActionListener(e -> service.PDFService.exportarConDialogo(this, tabla, "Reporte de Categorias"));
         pnlBusqueda.add(btnBuscar);
         pnlBusqueda.add(btnImprimir);
 

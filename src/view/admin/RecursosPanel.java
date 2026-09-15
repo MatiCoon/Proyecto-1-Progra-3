@@ -46,7 +46,7 @@ public class RecursosPanel extends JPanel {
 
         btnBuscar.addActionListener(e -> filtrar());
         btnTodos.addActionListener(e -> { cmbFiltroCategoria.setSelectedIndex(-1); actualizarTabla(recursoController.obtenerTodos()); });
-        btnImprimir.addActionListener(e -> JOptionPane.showMessageDialog(this, "Generación PDF en Fase 4"));
+        btnImprimir.addActionListener(e -> service.PDFService.exportarConDialogo(this, tabla, "Reporte de Recursos"));
 
         pnlBusqueda.add(btnBuscar);
         pnlBusqueda.add(btnTodos);

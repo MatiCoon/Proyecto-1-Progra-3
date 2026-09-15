@@ -42,7 +42,7 @@ public class FuncionariosPanel extends JPanel {
         JButton btnImprimir = new JButton("Imprimir"); // PDF Feature placeholder
 
         btnBuscar.addActionListener(e -> buscar());
-        btnImprimir.addActionListener(e -> JOptionPane.showMessageDialog(this, "Generación PDF en Fase 4"));
+        btnImprimir.addActionListener(e -> service.PDFService.exportarConDialogo(this, tabla, "Reporte de Funcionarios"));
 
         pnlBusqueda.add(btnBuscar);
         pnlBusqueda.add(btnImprimir);

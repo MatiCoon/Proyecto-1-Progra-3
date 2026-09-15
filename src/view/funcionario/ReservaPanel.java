@@ -135,7 +135,7 @@ public class ReservaPanel extends JPanel {
         JButton btnCancelar = new JButton("Cancelar reserva seleccionada");
         JButton btnImprimir = new JButton("Imprimir");
         btnCancelar.addActionListener(e -> cancelar());
-        btnImprimir.addActionListener(e -> JOptionPane.showMessageDialog(this, "Generación PDF en Fase 4"));
+        btnImprimir.addActionListener(e -> service.PDFService.exportarConDialogo(this, tablaReservas, "Mis Reservas"));
         pnlAccionesTabla.add(btnCancelar);
         pnlAccionesTabla.add(btnImprimir);
         pnlTabla.add(pnlAccionesTabla, BorderLayout.SOUTH);
