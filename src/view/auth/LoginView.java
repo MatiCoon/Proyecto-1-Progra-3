@@ -77,7 +77,7 @@ public class LoginView extends JFrame {
                 AdminFrame adminFrame = new AdminFrame(funcionarioController, categoriaController, recursoController, reservaController);
                 adminFrame.setVisible(true);
             } else {
-                FuncionarioFrame funcFrame = new FuncionarioFrame(reservaController, categoriaController, autenticado.getId());
+                FuncionarioFrame funcFrame = new FuncionarioFrame(reservaController, categoriaController, recursoController, autenticado.getId());
                 funcFrame.setVisible(true);
             }
         } else {

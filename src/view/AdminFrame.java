@@ -2,6 +2,7 @@ package view;
 
 import controller.*;
 import view.admin.*;
+import view.matrix.CalendarizacionPanel;
 
 import javax.swing.*;
 
@@ -21,7 +22,7 @@ public class AdminFrame extends JFrame {
         tabs.addTab("Funcionarios", pnlFuncionarios);
         tabs.addTab("Categorías", pnlCategorias);
         tabs.addTab("Recursos", pnlRecursos);
-        tabs.addTab("Calendarización", new JPanel());
+        tabs.addTab("Calendarización", new CalendarizacionPanel(resController, rc));
         tabs.addTab("Estadísticas", new view.estadisticas.EstadisticasPanel(resController));
 
         tabs.addChangeListener(e -> {
