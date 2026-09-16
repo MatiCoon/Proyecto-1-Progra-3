@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class AIService {
     private static final String API_KEY = System.getenv("GEMINI_API_KEY");
-    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=";
+    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=";
 
     public static ReservaExtraidaDTO extraerDatosReserva(String textoNatural, List<Categoria> categoriasDisponibles) throws Exception {
         if (API_KEY == null || API_KEY.isBlank()) {
