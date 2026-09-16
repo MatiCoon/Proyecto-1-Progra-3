@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<reservas>
+    <reserva>
+        <id>RES-A1B2C3</id>
+        <funcionarioId>101</funcionarioId>
+        <actividad>Inducción de Personal Nuevo</actividad>
+        <fecha>2026-09-16</fecha>
+        <horaInicio>08:00</horaInicio>
+        <horaFin>10:00</horaFin>
+        <estado>ACTIVA</estado>
+        <recursosAsignados>
+            <recursoId>REC-SAL-01</recursoId>
+            <recursoId>REC-PRO-01</recursoId>
+        </recursosAsignados>
+    </reserva>
+    <reserva>
+        <id>RES-D4E5F6</id>
+        <funcionarioId>102</funcionarioId>
+        <actividad>Revisión Semanal de Métricas</actividad>
+        <fecha>2026-09-16</fecha>
+        <horaInicio>10:00</horaInicio>
+        <horaFin>12:00</horaFin>
+        <estado>ACTIVA</estado>
+        <recursosAsignados>
+            <recursoId>REC-SAL-02</recursoId>
+            <recursoId>REC-LAP-01</recursoId>
+        </recursosAsignados>
+    </reserva>
+    <reserva>
+        <id>RES-G7H8I9</id>
+        <funcionarioId>101</funcionarioId>
+        <actividad>Sesión de Pruebas de Despliegue</actividad>
+        <fecha>2026-09-18</fecha>
+        <horaInicio>14:00</horaInicio>
+        <horaFin>16:00</horaFin>
+        <estado>ACTIVA</estado>
+        <recursosAsignados>
+            <recursoId>REC-SAL-01</recursoId>
+        </recursosAsignados>
+    </reserva>
+</reservas>

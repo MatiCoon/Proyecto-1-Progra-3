@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<recursos>
+    <recurso>
+        <id>REC-SAL-01</id>
+        <categoriaId>CAT-000001</categoriaId>
+        <descripcion>Sala Principal (Capacidad 20 personas)</descripcion>
+    </recurso>
+    <recurso>
+        <id>REC-SAL-02</id>
+        <categoriaId>CAT-000001</categoriaId>
+        <descripcion>Sala B (Capacidad 8 personas)</descripcion>
+    </recurso>
+    <recurso>
+        <id>REC-PRO-01</id>
+        <categoriaId>CAT-000002</categoriaId>
+        <descripcion>Proyector Epson HDMI 4K</descripcion>
+    </recurso>
+    <recurso>
+        <id>REC-LAP-01</id>
+        <categoriaId>CAT-000003</categoriaId>
+        <descripcion>Laptop Dell Latitude Core i7</descripcion>
+    </recurso>
+</recursos>
